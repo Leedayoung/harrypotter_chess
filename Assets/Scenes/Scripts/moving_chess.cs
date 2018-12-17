@@ -5,7 +5,7 @@ using UnityEngine;
 public class moving_chess : MonoBehaviour {
 
     enum DIR { UP, DOWN, LEFT, RIGHT, LUP, RUP, LDOWN, RDOWN };
-    public float smoothTime = 0.1F;
+    public float smoothTime = 1.0F;
     private Vector3 velocity = Vector3.zero;
 
     Vector3 targetPosition;
@@ -49,7 +49,10 @@ public class moving_chess : MonoBehaviour {
                 break;
         }
     }
-
+    void destroy_chess()
+    {
+        Destroy(gameObject);
+    }
     // Update is called once per frame
     void Update () {
         if (transform.position != targetPosition)
@@ -64,6 +67,7 @@ public class moving_chess : MonoBehaviour {
         else if (Input.GetKey("d")) move_dir(DIR.RIGHT);
         else if (Input.GetKey("z")) move_dir(DIR.LDOWN);
         else if (Input.GetKey("x")) move_dir(DIR.DOWN);
-        else if (Input.GetKey("c")) move_dir(DIR.RDOWN);   
+        else if (Input.GetKey("c")) move_dir(DIR.RDOWN);
+        else if (Input.GetKey(KeyCode.Space)) destroy_chess();
     }
 }
