@@ -6,25 +6,25 @@ public class camera_handler : MonoBehaviour {
     public Camera HarryCam, OppoCam;
     public bool camSwitch = false;
     public Camera activeCam;
-    public float rotationSpeed = 0.1f;
     public Quaternion target_rotation;
     bool on_process = false;
     protected virtual void Start()
     {
-
-        //Camera[] cameras = Camera.allCameras;
-        //HarryCam = cameras[1];
-        //OppoCam = cameras[2];
-        HarryCam.gameObject.SetActive(false);
-        OppoCam.gameObject.SetActive(false);
-
-        activeCam = HarryCam;
         activeCam.gameObject.SetActive(true);
         target_rotation = activeCam.transform.rotation;
     }
     void rotate_camera()
     {
-        activeCam.transform.rotation = Quaternion.Lerp(activeCam.transform.rotation, target_rotation, Time.deltaTime);
+        Quaternion new_quaternion = Quaternion.Lerp(activeCam.transform.rotation, target_rotation, Time.deltaTime);
+        if (new_quaternion == activeCam.transform.rotation)
+        {
+            activeCam.transform.Rotate(0, -30, 0);
+            on_process = false;
+        }
+        else
+        {
+            activeCam.transform.rotation = new_quaternion;
+        }
     }
 
     void Update()
@@ -45,18 +45,9 @@ public class camera_handler : MonoBehaviour {
             activeCam.transform.Rotate(0, -30, 0);
             on_process = true;
         }
-        else
+        else if(on_process)
         {
-            if (on_process && activeCam.transform.rotation == target_rotation)
-            {
-                activeCam.transform.Rotate(0, -30, 0);
-                on_process = false;
-                Debug.Log("Process_end");
-                
-            }else if (on_process)
-            {
-                rotate_camera();
-            }
+            rotate_camera();
         }
         return;
     }
