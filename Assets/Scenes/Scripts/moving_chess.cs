@@ -7,7 +7,7 @@ public class moving_chess : MonoBehaviour {
     enum DIR { UP, DOWN, LEFT, RIGHT, LUP, RUP, LDOWN, RDOWN };
     public float smoothTime = 1.0F;
     private Vector3 velocity = Vector3.zero;
-    
+    private bool on_process = false;
     Vector3 targetPosition;
 
     protected virtual void Start () {
@@ -16,6 +16,7 @@ public class moving_chess : MonoBehaviour {
 	
     void move_dir(DIR dir)
     {
+        on_process = true;
         int is_harry = 1;
         if (transform.tag.CompareTo("Harry") != 0)
         {
@@ -51,28 +52,37 @@ public class moving_chess : MonoBehaviour {
     }
     void destroy_chess()
     {
-        Mesh mesh = GetComponent<MeshFilter>().mesh;
+        Mesh mesh = GetComponentInChildren<MeshFilter>().mesh;
         Vector3[] vertices = mesh.vertices;
         Vector3[] normals = mesh.normals;
 
         for (var i = 0; i < vertices.Length; i++)
         {
-            vertices[i] += normals[i] * Mathf.Sin(Time.time);
+            vertices[i] += normals[i] * Random.Range(-1.0f, 1.0f); //* Mathf.Sin(Time.time);
         }
 
         mesh.vertices = vertices;
-        GetComponent<MeshFilter>().mesh = mesh;
+        GetComponentInChildren<MeshFilter>().mesh = mesh;
         
         //Destroy(gameObject);
     }
     // Update is called once per frame
     void Update () {
-        if (transform.position != targetPosition)
+        if (on_process)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-            return;
+            if(transform.position != targetPosition)
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+                destroy_chess();
+            }
+            else
+            {
+                Destroy(gameObject);
+                on_process = false;
+            }
+            
         }
-        if (Input.GetKey("q")) move_dir(DIR.LUP);
+        else if (Input.GetKey("q")) move_dir(DIR.LUP);
         else if (Input.GetKey("w")) move_dir(DIR.UP);
         else if (Input.GetKey("e")) move_dir(DIR.RUP);
         else if (Input.GetKey("a")) move_dir(DIR.LEFT);
@@ -81,5 +91,7 @@ public class moving_chess : MonoBehaviour {
         else if (Input.GetKey("x")) move_dir(DIR.DOWN);
         else if (Input.GetKey("c")) move_dir(DIR.RDOWN);
         else if (Input.GetKey(KeyCode.Space)) destroy_chess();
+
+        return;
     }
 }
