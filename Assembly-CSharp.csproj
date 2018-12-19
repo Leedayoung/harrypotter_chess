@@ -73,6 +73,7 @@
      <Compile Include="Assets\RockVR\Video\Scripts\VideoCaptureCtrl.cs" />
      <Compile Include="Assets\RockVR\Video\Scripts\VideoPlayer.cs" />
      <Compile Include="Assets\RunemarkStudio\DarkFantasyKit [Free]\Readme\Parts\Readme.cs" />
+     <Compile Include="Assets\Scenes\Scripts\camera_handler.cs" />
      <Compile Include="Assets\Scenes\Scripts\moving_chess.cs" />
      <None Include="Assets\RockVR\Video\Shaders\DownsamplePro.shader" />
      <None Include="Assets\RockVR\Video\Shaders\Cubemap2Equirectangular.shader" />

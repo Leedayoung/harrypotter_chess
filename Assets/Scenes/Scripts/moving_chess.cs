@@ -7,7 +7,7 @@ public class moving_chess : MonoBehaviour {
     enum DIR { UP, DOWN, LEFT, RIGHT, LUP, RUP, LDOWN, RDOWN };
     public float smoothTime = 1.0F;
     private Vector3 velocity = Vector3.zero;
-
+    
     Vector3 targetPosition;
 
     protected virtual void Start () {
@@ -51,7 +51,19 @@ public class moving_chess : MonoBehaviour {
     }
     void destroy_chess()
     {
-        Destroy(gameObject);
+        Mesh mesh = GetComponent<MeshFilter>().mesh;
+        Vector3[] vertices = mesh.vertices;
+        Vector3[] normals = mesh.normals;
+
+        for (var i = 0; i < vertices.Length; i++)
+        {
+            vertices[i] += normals[i] * Mathf.Sin(Time.time);
+        }
+
+        mesh.vertices = vertices;
+        GetComponent<MeshFilter>().mesh = mesh;
+        
+        //Destroy(gameObject);
     }
     // Update is called once per frame
     void Update () {
