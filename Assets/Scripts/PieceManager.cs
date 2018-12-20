@@ -9,11 +9,25 @@ public class PieceManager : MonoBehaviour
     public bool mHuman = true;
 
     public GameObject mPiecePrefab;
-    public GameManager mGameManager;
 
-    private List<BasePiece> mWhitePieces = null;
-    private List<BasePiece> mBlackPieces = null;
+    private static List<BasePiece> mWhitePieces = null;
+    private static List<BasePiece> mBlackPieces = null;
     private List<BasePiece> mPromotedPieces = new List<BasePiece>();
+
+    public static List<BasePiece> ShareWhitePieces
+    {
+        get
+        {
+            return mWhitePieces;
+        }
+    }
+    public static List<BasePiece> ShareBlackPieces
+    {
+        get
+        {
+            return mBlackPieces;
+        }
+    }
 
 
     private string[] mPieceOrder = new string[16]
@@ -85,12 +99,9 @@ public class PieceManager : MonoBehaviour
     {
         if(!mIsKingAlive || !mHuman)
         {
-            gameObject.SetActive(false);
-            
-            //ResetPieces();
-            //mIsKingAlive = true;
-            //mHuman = true;
-            //color = Color.black;
+            ResetPieces();
+            mIsKingAlive = true;
+            color = Color.black;
         }
         bool isBlackTurn = color == Color.white ? true : false;
         SetInteractive(mWhitePieces, !isBlackTurn);

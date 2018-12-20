@@ -10,7 +10,7 @@ public abstract class BasePiece : EventTrigger
     //public bool mIsFirstMove = true;
 
     protected Cell mOriginalCell = null;
-    protected Cell mCurrentCell = null;
+    public Cell mCurrentCell = null;
 
     protected RectTransform mRectTransform = null;
     protected PieceManager mPieceManager;
@@ -44,43 +44,21 @@ public abstract class BasePiece : EventTrigger
 
     public void Reset()
     {
-        if (isHuman)
-        {
-            Debug.Log(mCurrentCell.mCurrentPiece);
-            isHuman = false;
-            bool isBlackTurn = mCurrentCell.mCurrentPiece.mColor == Color.white ? true : false;
-            if (isBlackTurn) GetComponent<Image>().color = new Color32(0, 99, 2, 255);
-            else GetComponent<Image>().color = new Color32(174, 0, 1, 255);
-            //mCurrentCell.mBoard.view_point1 = true;
-            //mCurrentCell.mBoard.view_point2 = true;
-        }
-
-        Kill();       
+        Kill();
 
         Place(mOriginalCell);
     }
 
     public virtual void Kill()
     {
-
-        if (isHuman)
-        {
-            mPieceManager.mHuman = false;
-            Debug.Log(mCurrentCell.mCurrentPiece);
-            isHuman = false;
-            bool isBlackTurn = mCurrentCell.mCurrentPiece.mColor == Color.white ? true : false;
-            if (isBlackTurn) GetComponent<Image>().color = new Color32(0, 99, 2, 255);
-            else GetComponent<Image>().color = new Color32(174, 0, 1, 255);
-            mCurrentCell.mBoard.view_point1 = true;
-            mCurrentCell.mBoard.view_point2 = true;
-
-        }
+       
         //Clear Current Cell
         mCurrentCell.mCurrentPiece = null;
 
         //Remove Pieces
         gameObject.SetActive(false);
-        
+
+        if (isHuman) mPieceManager.mHuman = false;
     }
 
     #region Movement
@@ -220,13 +198,8 @@ public abstract class BasePiece : EventTrigger
             transform.position = mCurrentCell.gameObject.transform.position;
             return;
         }
-
-        Debug.Log(mCurrentCell.mBoardPosition);
-
         //Move to New Cell
         Move();
-
-        Debug.Log(mCurrentCell.mBoardPosition);
 
         //End turn
         mPieceManager.SwitchSides(mColor);
