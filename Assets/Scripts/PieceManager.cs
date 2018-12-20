@@ -16,6 +16,11 @@ public class PieceManager : MonoBehaviour
     private static List<BasePiece> mBlackPieces = null;
     private List<BasePiece> mPromotedPieces = new List<BasePiece>();
 
+    public Vector2Int white_cam;
+    public Vector2Int black_cam;
+    public bool flag1 = false;
+    public bool flag2 = false;
+
     public static List<BasePiece> ShareWhitePieces
     {
         get

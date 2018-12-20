@@ -107,8 +107,8 @@ public class move : MonoBehaviour
         {
             if ((int)transform.position.x== (int)targetPosition.x && (int)transform.position.z == (int)targetPosition.z)
             {
-                Debug.Log("Free");
-                GameObject.Find(pieceToRemove.pieceName).GetComponent<move>().destroy_chess();
+                //Debug.Log("Free");
+                if (pieceToRemove) GameObject.Find(pieceToRemove.pieceName).GetComponent<move>().destroy_chess();
                 on_process = false;
                 PieceManager.timer = false;
                 return;

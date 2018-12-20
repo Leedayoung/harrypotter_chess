@@ -153,6 +153,8 @@ public abstract class BasePiece : EventTrigger
             mCurrentCell.mBoard.view_point2 = false;
             mPieceManager.SwitchSides(mColor);
             GetComponent<Image>().color = new Color32(153, 0, 102, 255);
+            mPieceManager.black_cam = mCurrentCell.mBoardPosition;
+            mPieceManager.flag2 = true;
             return;
         }
         isHuman = true;
@@ -160,6 +162,8 @@ public abstract class BasePiece : EventTrigger
         mCurrentCell.mBoard.view_point1 = false;
         GetComponent<Image>().color = new Color32(0, 47, 1, 255);
         mPieceManager.SwitchSides(mColor);
+        mPieceManager.white_cam = mCurrentCell.mBoardPosition;
+        mPieceManager.flag1 = true;
         return;
 
     }
@@ -204,8 +208,18 @@ public abstract class BasePiece : EventTrigger
         
         //Move to New Cell
         Move();
+        if (mColor == Color.white && isHuman)
+        {
+            mPieceManager.white_cam = mCurrentCell.mBoardPosition;
+            mPieceManager.flag1 = true;
+        }
+        else if (mColor == Color.black && isHuman)
+        {
+            mPieceManager.black_cam = mCurrentCell.mBoardPosition;
+            mPieceManager.flag2 = true;
+        }
 
-        Debug.Log(mCurrentCell.mBoardPosition);
+        //Debug.Log(mCurrentCell.mBoardPosition);
         //End turn
         mPieceManager.SwitchSides(mColor);
     }
