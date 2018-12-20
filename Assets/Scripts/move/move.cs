@@ -7,11 +7,13 @@ public class move : MonoBehaviour
 
     enum DIR { UP, DOWN, LEFT, RIGHT, LUP, RUP, LDOWN, RDOWN };
     public float smoothTime = 1.0F;
-    private float scale = 6.0F;
+    private float scale = 6.5F;
     private Vector3 velocity = Vector3.zero;
 
     Vector3 targetPosition;
     Vector2Int boardPosition = Vector2Int.zero;
+
+
     private Dictionary<string, int> pieceName2idx = new Dictionary<string, int>()
     {
         {"Pawn_1", 0}, {"Pawn_2", 1}, {"Pawn_3", 2}, {"Pawn_4", 3},
@@ -29,17 +31,17 @@ public class move : MonoBehaviour
 
     void destroy_chess()
     {
-        Mesh mesh = GetComponent<MeshFilter>().mesh;
+        Mesh mesh = GetComponentInChildren<MeshFilter>().mesh;
         Vector3[] vertices = mesh.vertices;
         Vector3[] normals = mesh.normals;
 
         for (var i = 0; i < vertices.Length; i++)
         {
-            vertices[i] += normals[i] * Mathf.Sin(Time.time);
+            vertices[i] += normals[i] * Random.Range(-1.0f, 1.0f); //* Mathf.Sin(Time.time);
         }
 
         mesh.vertices = vertices;
-        GetComponent<MeshFilter>().mesh = mesh;
+        GetComponentInChildren<MeshFilter>().mesh = mesh;
 
         //Destroy(gameObject);
     }
@@ -74,17 +76,22 @@ public class move : MonoBehaviour
         }
 
         Vector2Int diff = newBoardPosition - boardPosition;
+        if (diff != new Vector2Int(0,0))
+        {
+            Vector3 targetPosition_temp = gameObject.transform.position;
+            targetPosition_temp.x -= diff.x * scale;
+            targetPosition_temp.z -= diff.y * scale;
+            targetPosition = targetPosition_temp;
+        }
         boardPosition = newBoardPosition;
-
-
-        Vector3 targetPosition = gameObject.transform.position;
-        targetPosition.x -= diff.x * scale;
-        targetPosition.z -= diff.y * scale;
+      
         
         // Move 3D object
         if (transform.position != targetPosition)
         {
-            transform.position = targetPosition;
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            //destroy_chess();
+            //transform.position = targetPosition;
             return;
         }
 

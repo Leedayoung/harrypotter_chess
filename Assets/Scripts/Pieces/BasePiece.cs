@@ -184,6 +184,7 @@ public abstract class BasePiece : EventTrigger
 
             mTargetCell = null;
         }
+        print(mCurrentCell.mBoardPosition);
     }
 
     public override void OnEndDrag(PointerEventData eventData)
@@ -198,9 +199,11 @@ public abstract class BasePiece : EventTrigger
             transform.position = mCurrentCell.gameObject.transform.position;
             return;
         }
+        
         //Move to New Cell
         Move();
 
+        Debug.Log(mCurrentCell.mBoardPosition);
         //End turn
         mPieceManager.SwitchSides(mColor);
     }
