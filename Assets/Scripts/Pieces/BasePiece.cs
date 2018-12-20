@@ -198,8 +198,13 @@ public abstract class BasePiece : EventTrigger
             transform.position = mCurrentCell.gameObject.transform.position;
             return;
         }
+
+        Debug.Log(mCurrentCell.mBoardPosition);
+
         //Move to New Cell
         Move();
+
+        Debug.Log(mCurrentCell.mBoardPosition);
 
         //End turn
         mPieceManager.SwitchSides(mColor);
