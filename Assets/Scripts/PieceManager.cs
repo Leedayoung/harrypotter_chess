@@ -99,9 +99,12 @@ public class PieceManager : MonoBehaviour
     {
         if(!mIsKingAlive || !mHuman)
         {
+            gameObject.SetActive(false); 
+            /*
             ResetPieces();
             mIsKingAlive = true;
             color = Color.black;
+            */
         }
         bool isBlackTurn = color == Color.white ? true : false;
         SetInteractive(mWhitePieces, !isBlackTurn);
