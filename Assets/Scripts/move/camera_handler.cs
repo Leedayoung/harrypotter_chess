@@ -48,7 +48,7 @@ public class camera_handler : MonoBehaviour {
         Quaternion new_quaternion = Quaternion.Lerp(activeCam.transform.rotation, target_rotation, Time.deltaTime);
         if (new_quaternion == activeCam.transform.rotation)
         {
-            activeCam.transform.Rotate(0, -20, 0);
+            activeCam.transform.Rotate(3, -20, 9);
             on_process = false;
         }
         else

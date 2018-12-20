@@ -12,5 +12,6 @@ public class GameManager : MonoBehaviour
         mBoard.Create();
 
         mPieceManager.Setup(mBoard);
+        mPieceManager.gameOverPanel.SetActive(false);
     }
 }

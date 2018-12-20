@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PieceManager : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class PieceManager : MonoBehaviour
     public Vector2Int black_cam;
     public bool flag1 = false;
     public bool flag2 = false;
+
+    public GameObject gameOverPanel;
+    public Text gameOverText;
 
     public static List<BasePiece> ShareWhitePieces
     {
@@ -110,7 +114,10 @@ public class PieceManager : MonoBehaviour
     {
         if(!mIsKingAlive || !mHuman)
         {
-            gameObject.SetActive(false); 
+            gameObject.SetActive(false);
+            gameOverPanel.SetActive(true);
+            if(color == Color.white) gameOverText.text = "Slytherine Wins!";
+            else gameOverText.text = "Gryffindor Wins!";
             /*
             ResetPieces();
             mIsKingAlive = true;
