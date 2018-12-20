@@ -7,6 +7,8 @@ public class PieceManager : MonoBehaviour
     [HideInInspector]
     public bool mIsKingAlive = true;
     public bool mHuman = true;
+    public bool isBlackTurn = false;
+    public static bool timer = false;
 
     public GameObject mPiecePrefab;
 
@@ -29,6 +31,10 @@ public class PieceManager : MonoBehaviour
         }
     }
 
+    public static void SetTimer(bool setter)
+    {
+        timer = setter;
+    }
 
     private string[] mPieceOrder = new string[16]
     {
@@ -106,7 +112,7 @@ public class PieceManager : MonoBehaviour
             color = Color.black;
             */
         }
-        bool isBlackTurn = color == Color.white ? true : false;
+        isBlackTurn = color == Color.white ? true : false;
         SetInteractive(mWhitePieces, !isBlackTurn);
         SetInteractive(mBlackPieces, isBlackTurn);
     }
