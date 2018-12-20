@@ -9,6 +9,7 @@ public class PieceManager : MonoBehaviour
     public bool mHuman = true;
 
     public GameObject mPiecePrefab;
+    public GameManager mGameManager;
 
     private List<BasePiece> mWhitePieces = null;
     private List<BasePiece> mBlackPieces = null;
@@ -84,9 +85,12 @@ public class PieceManager : MonoBehaviour
     {
         if(!mIsKingAlive || !mHuman)
         {
-            ResetPieces();
-            mIsKingAlive = true;
-            color = Color.black;
+            gameObject.SetActive(false);
+            
+            //ResetPieces();
+            //mIsKingAlive = true;
+            //mHuman = true;
+            //color = Color.black;
         }
         bool isBlackTurn = color == Color.white ? true : false;
         SetInteractive(mWhitePieces, !isBlackTurn);

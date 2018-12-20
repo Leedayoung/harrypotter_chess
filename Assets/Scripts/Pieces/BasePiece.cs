@@ -44,21 +44,43 @@ public abstract class BasePiece : EventTrigger
 
     public void Reset()
     {
-        Kill();
+        if (isHuman)
+        {
+            Debug.Log(mCurrentCell.mCurrentPiece);
+            isHuman = false;
+            bool isBlackTurn = mCurrentCell.mCurrentPiece.mColor == Color.white ? true : false;
+            if (isBlackTurn) GetComponent<Image>().color = new Color32(0, 99, 2, 255);
+            else GetComponent<Image>().color = new Color32(174, 0, 1, 255);
+            //mCurrentCell.mBoard.view_point1 = true;
+            //mCurrentCell.mBoard.view_point2 = true;
+        }
+
+        Kill();       
 
         Place(mOriginalCell);
     }
 
     public virtual void Kill()
     {
-       
+
+        if (isHuman)
+        {
+            mPieceManager.mHuman = false;
+            Debug.Log(mCurrentCell.mCurrentPiece);
+            isHuman = false;
+            bool isBlackTurn = mCurrentCell.mCurrentPiece.mColor == Color.white ? true : false;
+            if (isBlackTurn) GetComponent<Image>().color = new Color32(0, 99, 2, 255);
+            else GetComponent<Image>().color = new Color32(174, 0, 1, 255);
+            mCurrentCell.mBoard.view_point1 = true;
+            mCurrentCell.mBoard.view_point2 = true;
+
+        }
         //Clear Current Cell
         mCurrentCell.mCurrentPiece = null;
 
         //Remove Pieces
         gameObject.SetActive(false);
-
-        if (isHuman) mPieceManager.mHuman = false;
+        
     }
 
     #region Movement
