@@ -10,6 +10,8 @@ public class move : MonoBehaviour
     private float scale = 6.5F;
     private Vector3 velocity = Vector3.zero;
 
+    int randomNum = 0;
+    BasePiece pieceToRemove;
     Vector3 targetPosition;
     Vector2Int boardPosition = Vector2Int.zero;
 
@@ -32,19 +34,25 @@ public class move : MonoBehaviour
 
     void destroy_chess()
     {
+        Destroy(gameObject);
+    }
+
+    void destroy_chess_process()
+    {
         Mesh mesh = GetComponentInChildren<MeshFilter>().mesh;
         Vector3[] vertices = mesh.vertices;
         Vector3[] normals = mesh.normals;
 
-        for (var i = 0; i < vertices.Length; i++)
-        {
-            vertices[i] += normals[i] * Random.Range(-1.0f, 1.0f); //* Mathf.Sin(Time.time);
-        }
+        if (randomNum % 2 == 0)
+            for (var i = 0; i < vertices.Length; i++)
+                vertices[i] += vertices[i] * Random.Range(0f, 0.3f); //* Mathf.Sin(Time.time);
+
+        else
+            for (var i = 0; i < vertices.Length; i++)
+                vertices[i] = vertices[i] * Random.Range(0.9f, 1.0f); //* Mathf.Sin(Time.time);
 
         mesh.vertices = vertices;
         GetComponentInChildren<MeshFilter>().mesh = mesh;
-
-        //Destroy(gameObject);
     }
     // Update is called once per frame
     void Update()
@@ -68,6 +76,7 @@ public class move : MonoBehaviour
 
         string key = objectName.Substring(2, objectName.Length - 2);
         int idx = pieceName2idx[key];
+        pieces[idx].pieceName = objectName;
         Vector2Int newBoardPosition = pieces[idx].mCurrentCell.mBoardPosition;
 
         if(boardPosition.x < 0)
@@ -83,18 +92,23 @@ public class move : MonoBehaviour
             targetPosition_temp.x -= diff.x * scale;
             targetPosition_temp.z -= diff.y * scale;
             targetPosition = targetPosition_temp;
+            pieceToRemove = pieces[idx].mCurrentCell.mPastPiece;
             on_process = true;
             PieceManager.timer = on_process;
         }
         boardPosition = newBoardPosition;
-      
-        
+
+        // Random destroy effect
+        if (randomNum == 0)
+            randomNum = Random.Range(1, 100);
+
         // Move 3D object
-        if(on_process)
+        if (on_process)
         {
             if ((int)transform.position.x== (int)targetPosition.x && (int)transform.position.z == (int)targetPosition.z)
             {
                 Debug.Log("Free");
+                GameObject.Find(pieceToRemove.pieceName).GetComponent<move>().destroy_chess();
                 on_process = false;
                 PieceManager.timer = false;
                 return;
@@ -102,6 +116,10 @@ public class move : MonoBehaviour
             else
             {
                 transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+                if (pieceToRemove)
+                {
+                    GameObject.Find(pieceToRemove.pieceName).GetComponent<move>().destroy_chess_process();
+                }
                 return;
                 //Debug.Log(PieceManager.timer);
                 //destroy_chess();

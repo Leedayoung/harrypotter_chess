@@ -13,6 +13,7 @@ public class Cell : MonoBehaviour
     public RectTransform mRectTransform = null;
     [HideInInspector]
     public BasePiece mCurrentPiece = null;
+    public BasePiece mPastPiece = null;
 
     #region Setup
     public void Setup(Vector2Int newBoardPosition, Board newBoard)
@@ -29,6 +30,7 @@ public class Cell : MonoBehaviour
     {
         if (mCurrentPiece != null)
         {
+            mPastPiece = mCurrentPiece;
             mCurrentPiece.Kill();
         }
     }

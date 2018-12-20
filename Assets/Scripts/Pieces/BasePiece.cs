@@ -7,6 +7,7 @@ public abstract class BasePiece : EventTrigger
 {
     [HideInInspector]
     public Color mColor = Color.clear;
+    public string pieceName = null;
     //public bool mIsFirstMove = true;
 
     protected Cell mOriginalCell = null;
@@ -124,6 +125,7 @@ public abstract class BasePiece : EventTrigger
     {
         mTargetCell.RemovePiece();
         mCurrentCell.mCurrentPiece = null;
+        mCurrentCell.mPastPiece = null;
 
         //switch cells
         mCurrentCell = mTargetCell;
