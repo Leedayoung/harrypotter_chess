@@ -1,6 +1,6 @@
 Win64
 PlayerPath?
-C:/Users/pulse/Documents/Backup/TMI_GAME_2.exe
+C:/Users/pulse/Documents/Backup/New folder/Game_Demo/TMI_ChessGame.exe
 SceneListBegin?
 Assets/Scene1.unity
 SceneListEnd?
@@ -129,7 +129,7 @@ bb8814741d7085ebb3d19a1a11769619 Assembly-CSharp.dll:.DecalDestroyer
 94017dcc9f00fe671ea7dc427b4da011 Unity.TextMeshPro.dll:TMPro.TMP_SpriteAsset
 95425bf98f651b25ea24817b6f77566b Assembly-CSharp.dll:.GameManager
 8429f5e2e74458d387d20325476dffbf Assembly-CSharp.dll:.GunAim
-8159438c2b84681e42270ad582c1eae9 Assembly-CSharp.dll:.camera_handler
+d0222a33f0f185a82e3d2e1b477ed41e Assembly-CSharp.dll:.camera_handler
 238654b1e40612cfedad0d41e858d4a2 Assembly-CSharp.dll:.Knight
 b3ab2106268377ffe25dd18ac23dca28 Unity.TextMeshPro.dll:TMPro.TMP_Asset
 afbd1de2b04dd566a3e833a78eabeeee Assembly-CSharp.dll:.PieceManager

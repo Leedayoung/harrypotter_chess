@@ -187,7 +187,7 @@ public class camera_handler : MonoBehaviour {
             else
             {
                 HarryCam.gameObject.SetActive(camSwitch);
-                OppoCam.gameObject.SetActive(camSwitch);
+                OppoCam.gameObject.SetActive(!camSwitch);
                 PersCam.gameObject.SetActive(false);
                 pers_id = true;
                 if (!camSwitch) activeCam = OppoCam;
