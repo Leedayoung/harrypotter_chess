@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class camera_handler : MonoBehaviour {
-    public Camera HarryCam, OppoCam;
+    public Camera HarryCam, OppoCam, PersCam;
     public bool camSwitch = false;
     public Camera activeCam;
     public Quaternion target_rotation;
@@ -20,9 +20,11 @@ public class camera_handler : MonoBehaviour {
     public int cid_har = 0;
     bool i = true;
     bool j = true;
+    public bool pers_id = true;
 
     protected virtual void Start()
     {
+        PersCam.gameObject.SetActive(false);
         HarryCam.gameObject.SetActive(false);
         OppoCam.gameObject.SetActive(false);
         activeCam.gameObject.SetActive(true);
@@ -149,7 +151,9 @@ public class camera_handler : MonoBehaviour {
 
         if (identifier !=mPieceManager.isBlackTurn && !on_process && !PieceManager.timer)
         {
-            //Debug.Log(identifier);
+            pers_id = true;
+            PersCam.gameObject.SetActive(false);
+            Debug.Log("Changed");
             camSwitch = !camSwitch;
             HarryCam.gameObject.SetActive(camSwitch);
             OppoCam.gameObject.SetActive(!camSwitch);
@@ -170,6 +174,27 @@ public class camera_handler : MonoBehaviour {
         {
             rotate_camera();
         }
+        else if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (pers_id)
+            {
+                HarryCam.gameObject.SetActive(false);
+                OppoCam.gameObject.SetActive(false);
+                PersCam.gameObject.SetActive(true);
+                pers_id = false;
+                activeCam = PersCam;
+            }
+            else
+            {
+                HarryCam.gameObject.SetActive(camSwitch);
+                OppoCam.gameObject.SetActive(camSwitch);
+                PersCam.gameObject.SetActive(false);
+                pers_id = true;
+                if (!camSwitch) activeCam = OppoCam;
+                else activeCam = HarryCam;
+            }
+        }
+
         return;
     }
 
